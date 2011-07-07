@@ -19,5 +19,7 @@ For limit of 5 add -l 5
 Last five yesterday following codereview:
 PET -yesterday "codereview" -l 5
 
+Internally it is written in clojure (as an experiment) and uses sqlite3
+
 
 It is written in clojure
