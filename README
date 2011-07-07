@@ -1,13 +1,23 @@
-# pet
+This is PET Perseonal ExTernal Memory
 
-FIXME: write description
+Its intention is that you send short messages to it on your own computer.
+For example:
+Code review
+Fix unit test for class 1
+Refactor class 2 to reduce duplication
 
-## Usage
+All the stuff that you write in notepad or todolists or tiddlywiki on a normal day
 
-FIXME: write
+You can then get all items from today, or last items or the 5 items following "Code review" today.
 
-## License
+Not working yet:
+To install run it with -install as parameter.
+To write a message send the message like so "message"
+To retrive messages for today send -today, for yesterday -yesterday. 
+For a specific day send the date (format comming soon)
+For limit of 5 add -l 5
+Last five yesterday following codereview:
+PET -yesterday "codereview" -l 5
 
-Copyright (C) 2011 FIXME
 
-Distributed under the Eclipse Public License, the same as Clojure.
+It is written in clojure
