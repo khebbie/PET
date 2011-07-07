@@ -10,13 +10,13 @@
 
 (. Class (forName "org.sqlite.JDBC")) ; Initialize the JDBC driver
 
-;(defn db-create 
-; "Creates the table for this model"
-;  []
-;  (sql/create-table
-;   :something
-;   [:id :int "PRIMARY KEY"]
-;   [:name "varchar(32)"]))
+(defn db-create 
+ "Creates the table for this model"
+  []
+  (sql/create-table
+   :something
+   [:id :int "PRIMARY KEY"]
+   [:name "varchar(32)"]))
 
 (defn db-insert
   "inserts to the database" 
