@@ -19,26 +19,26 @@
     [:id :int "PRIMARY KEY"]
     [:name "varchar(32)"]))
 
-(defn db-insert
+(defn db-insert [text]
   "inserts to the database" 
-  []
-  (sql/do-commands "INSERT INTO something(name) VALUES ('khebbie')"))
+  (sql/do-commands (str "INSERT INTO something(name) VALUES ('"text"')")))
 
 (defn -main [& args]
-  (cmd/with-command-line args
-                         "Command line demo"
-                         [[install? b? "Choose if the database install should be run"]
-                          remaining]
-                         (if (or install? false)
-                           (sql/with-connection
-                             db
-                             (sql/transaction
-                               (db-insert))))
-
-                         )
-
+  (cmd/with-command-line 
+    args
+    "Command line demo"
+    [[install? b? "Choose if the database install should be run"]
+     [text "The text to insert in the db"]
+     remaining]
+    (if install? 
+      (sql/with-connection
+        db
+        (sql/transaction
+          (db-insert))))
+  (println "INSERT INTO something(name) VALUES ('" text "')")
   (sql/with-connection
     db
     (sql/transaction
-      (db-insert))))
+      (db-insert text))))
+  )
 
