@@ -1,6 +1,7 @@
 (ns pet.core
   (:require [clojure.contrib.sql :as sql])
   (:require [clojure.contrib.command-line :as cmd])
+  (:use [clj-time.core])
   (:gen-class))
 
 
@@ -15,13 +16,14 @@
   "Creates the table for this model"
   []
   (sql/create-table
-    :something
-    [:id :int "PRIMARY KEY"]
-    [:name "varchar(32)"]))
+    :messages
+    [:id :integer "PRIMARY KEY AUTOINCREMENT"]
+    [:name "varchar(32)"]
+    [:TimeEnter "DATE"]))
 
 (defn db-insert [text]
   "inserts to the database" 
-  (sql/do-commands (str "INSERT INTO something(name) VALUES ('"text"')")))
+  (sql/do-commands (str "INSERT INTO messages(name, TimeEnter) VALUES ('"text"', '" (now)"')")))
 
 (defn -main [& args]
   (cmd/with-command-line 
@@ -35,7 +37,11 @@
         db
         (sql/transaction
           (db-insert))))
-  (println "INSERT INTO something(name) VALUES ('" text "')")
+    (comment(sql/with-connection
+      db
+      (sql/transaction
+        (db-create))))
+    (println (now))
   (sql/with-connection
     db
     (sql/transaction
