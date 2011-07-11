@@ -1,6 +1,7 @@
 (ns pet.core
   (:require [clojure.contrib.sql :as sql])
   (:require [clojure.contrib.command-line :as cmd])
+  (:require [clojure.string :as st])
   (:use [clj-time.core])
   (:gen-class))
 
@@ -30,6 +31,7 @@
     args
     "Commandline arguments for PET"
     [[install? b? "Choose if the database install should be run"]
+     [today? b? "Find only records for today"]
      [text "The text to insert in the db"]
      remaining]
     (if install? 
@@ -37,14 +39,10 @@
         db
         (sql/transaction
           (db-create))))
-    (comment(sql/with-connection
-      db
-      (sql/transaction
-        (db-create))))
-    (println (now))
-  (sql/with-connection
-    db
-    (sql/transaction
-      (db-insert text))))
+    (if-not (st/blank? text)
+      (sql/with-connection
+        db
+        (sql/transaction
+          (db-insert text)))))
   )
 
