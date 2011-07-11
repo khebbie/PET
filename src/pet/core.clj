@@ -28,7 +28,7 @@
 (defn -main [& args]
   (cmd/with-command-line 
     args
-    "Command line demo"
+    "Commandline arguments for PET"
     [[install? b? "Choose if the database install should be run"]
      [text "The text to insert in the db"]
      remaining]
@@ -36,7 +36,7 @@
       (sql/with-connection
         db
         (sql/transaction
-          (db-insert))))
+          (db-create))))
     (comment(sql/with-connection
       db
       (sql/transaction
