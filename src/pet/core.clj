@@ -23,9 +23,16 @@
     [:TimeEnter "DATE"]))
 
 (defn db-insert [text]
-  "inserts to the database" 
+  "inserts to the database"
   (sql/do-commands (str "INSERT INTO messages(name, TimeEnter) VALUES ('"text"', '" (now)"')")))
 
+(defn db-query-for-today []
+  "Query records for today"
+  (println "Records for today")
+  (sql/with-query-results rs ["select * from messages;"] 
+               (doseq [row rs] (println (:name row)))
+                      ))
+  
 (defn -main [& args]
   (cmd/with-command-line 
     args
@@ -38,7 +45,14 @@
       (sql/with-connection
         db
         (sql/transaction
-          (db-create))))
+          (db-create)))
+      )
+    (if today?
+      (sql/with-connection
+        db
+        (sql/transaction
+          (db-query-for-today)))
+      )
     (if-not (st/blank? text)
       (sql/with-connection
         db
