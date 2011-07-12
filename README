@@ -10,13 +10,22 @@ All the stuff that you write in notepad or todolists or tiddlywiki on a normal d
 
 You can then get all items from today, or last items or the 5 items following "Code review" today.
 
-Not working yet:
 To install run it with -install as parameter.
 To write a message send the message like so "message"
 To retrive messages for today send -today, for yesterday -yesterday. 
+Not working yet:
 For a specific day send the date (format comming soon)
 For limit of 5 add -l 5
 Last five yesterday following codereview:
 PET -yesterday "codereview" -l 5
 
 Internally it is written in clojure (as an experiment) and uses sqlite3
+
+From code review on IRC:
+db-create, db-insert and db-query-for-today has docstrings in the wrong place
+Closing parens should not be on own line - this is almost an objective thing, but since everything is an expression in clojure, some expressions should not be treated specially
+Use when instead of if &(doc when)
+Combine :require forms in namespace 
+Look at sql/insert-values from clojure-contrib
+
+
