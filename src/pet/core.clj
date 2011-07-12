@@ -23,17 +23,17 @@
     [:TimeEnter "DATE"]))
 
 (defn db-insert
- "Insert to messages table" 
+  "Insert to messages table" 
   [text]
   (sql/do-commands (str "INSERT INTO messages(name, TimeEnter) VALUES ('"text"', '" (now)"')")))
 
 (defn db-query-for-today 
- "Query" 
+  "Query" 
   []
-    (println "Records for today:")
+  (println "Records for today:")
   (sql/with-query-results rs ["select * from messages where strftime('%Y-%m-%d', TimeEnter) = strftime('%Y-%m-%d', 'now')"] 
-               (doseq [row rs] (println (:name row)))))
-  
+                          (doseq [row rs] (println (:name row)))))
+
 (defn -main [& args]
   (cmd/with-command-line 
     args
@@ -52,7 +52,7 @@
         db
         (sql/transaction
           (db-query-for-today))))
-    (if-not (st/blank? text)
+    (when-not (st/blank? text)
       (sql/with-connection
         db
         (sql/transaction
