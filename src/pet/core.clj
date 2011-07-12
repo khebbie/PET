@@ -30,7 +30,6 @@
 (defn db-query-for-today 
   "Query" 
   []
-  (println "Records for today:")
   (sql/with-query-results rs ["select * from messages where strftime('%Y-%m-%d', TimeEnter) = strftime('%Y-%m-%d', 'now')"] 
                           (doseq [row rs] (println (:name row)))))
 
