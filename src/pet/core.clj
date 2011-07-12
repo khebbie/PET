@@ -22,13 +22,15 @@
     [:name "varchar(32)"]
     [:TimeEnter "DATE"]))
 
-(defn db-insert [text]
-  "inserts to the database"
+(defn db-insert
+ "Insert to messages table" 
+  [text]
   (sql/do-commands (str "INSERT INTO messages(name, TimeEnter) VALUES ('"text"', '" (now)"')")))
 
-(defn db-query-for-today []
-  "Query records for today"
-  (println "Records for today:")
+(defn db-query-for-today 
+ "Query" 
+  []
+    (println "Records for today:")
   (sql/with-query-results rs ["select * from messages where strftime('%Y-%m-%d', TimeEnter) = strftime('%Y-%m-%d', 'now')"] 
                (doseq [row rs] (println (:name row)))
                       ))
@@ -41,13 +43,13 @@
      [today? b? "Find only records for today"]
      [text "The text to insert in the db"]
      remaining]
-    (if install? 
+    (when install? 
       (sql/with-connection
         db
         (sql/transaction
           (db-create)))
       )
-    (if today?
+    (when today?
       (sql/with-connection
         db
         (sql/transaction
