@@ -48,6 +48,7 @@
         (sql/transaction
           (db-create))))
     (when today?
+      (println "Entries from today")
       (sql/with-connection
         db
         (sql/transaction
