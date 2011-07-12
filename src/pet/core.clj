@@ -32,8 +32,7 @@
   []
     (println "Records for today:")
   (sql/with-query-results rs ["select * from messages where strftime('%Y-%m-%d', TimeEnter) = strftime('%Y-%m-%d', 'now')"] 
-               (doseq [row rs] (println (:name row)))
-                      ))
+               (doseq [row rs] (println (:name row)))))
   
 (defn -main [& args]
   (cmd/with-command-line 
@@ -47,18 +46,15 @@
       (sql/with-connection
         db
         (sql/transaction
-          (db-create)))
-      )
+          (db-create))))
     (when today?
       (sql/with-connection
         db
         (sql/transaction
-          (db-query-for-today)))
-      )
+          (db-query-for-today))))
     (if-not (st/blank? text)
       (sql/with-connection
         db
         (sql/transaction
-          (db-insert text)))))
-  )
+          (db-insert text))))))
 
